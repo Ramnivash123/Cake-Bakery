@@ -6,123 +6,42 @@
     <title>Cakes - Cake Bakery</title>
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const cakes = [
-                { name: "Chocolate Cake", image: "img/chocolate_cake.jpg", rating: 4.5, numRatings: 120 },
-                { name: "Vanilla Cake", image: "img/vanilla_cake.jpg", rating: 3.8, numRatings: 85 },
-                { name: "Strawberry Cake", image: "img/strawberry_cake.jpg", rating: 4.0, numRatings: 95 },
-                { name: "Cheesecake", image: "img/cheesecake.jpg", rating: 4.7, numRatings: 150 },
-                { name: "Red Velvet Cake", image: "img/red_velvet_cake.jpg", rating: 4.3, numRatings: 110 }
-            ];
-
-            function updateCakeRatings() {
-                const cakeContainers = document.querySelectorAll('.cake-card');
-
-                cakes.forEach((cake, index) => {
-                    const card = cakeContainers[index];
-                    const ratingStars = card.querySelector('.rating-stars');
-                    const avgRating = card.querySelector('.avg-rating');
-                    const numRatings = card.querySelector('.num-ratings');
-
-                    // Set average rating stars
-                    let starsHTML = '';
-                    for (let i = 1; i <= 5; i++) {
-                        starsHTML += `<span class="text-yellow-400">${i <= cake.rating ? '★' : '☆'}</span>`;
-                    }
-
-                    // Display the number of ratings and average rating
-                    ratingStars.innerHTML = starsHTML;
-                    avgRating.textContent = cake.rating.toFixed(1);
-                    numRatings.textContent = `(${cake.numRatings} ratings)`;
-                });
-            }
-
-            updateCakeRatings();
-        });
-    </script>
 </head>
 <body class="font-sans bg-gray-50 text-gray-800">
     <!-- Navbar -->
     <nav class="bg-pink-100 py-4">
         <div class="container mx-auto flex justify-between items-center">
-            <a class="text-pink-600 text-2xl font-bold font-cursive" href="#">Cake Bakery</a>
+            <a class="text-pink-600 text-2xl font-bold" href="#">Cake Bakery</a>
             <div class="flex space-x-4">
-                <a class="text-gray-800 hover:text-pink-600" href="index.html">Home</a>
+                <a class="text-gray-800 hover:text-pink-600" href="{{ url_for('logout') }}">Logout</a>
             </div>
         </div>
     </nav>
 
     <!-- Featured Cakes Section -->
-    <section class="featured-cakes py-16">
+    <section class="py-16">
         <div class="container mx-auto text-center">
             <h2 class="text-3xl font-bold mb-8">Our Varieties of Cakes</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="cake-card shadow-lg rounded overflow-hidden">
-                    <img src="img/chocolate cake poster.png" alt="Chocolate Cake" class="w-full">
-                    <div class="p-4">
-                        <h5 class="text-xl font-semibold">Chocolate Cake</h5>
-                        <div class="flex items-center space-x-2">
-                            <div class="rating-stars text-yellow-400">
-                                <!-- Rating Stars will be filled by JS -->
-                            </div>
-                            <span class="text-gray-500">(<span class="avg-rating">4.5</span> stars)</span>
-                        </div>
-                        <p class="text-sm text-gray-500"><span class="num-ratings">(120 ratings)</span></p>
-                    </div>
+                <div class="cake-card shadow-lg rounded p-6 bg-white">
+                    <h5 class="text-xl font-semibold">Chocolate Cake</h5>
+                    <p class="text-gray-500">Rating: 4.5 (120 ratings)</p>
                 </div>
-                <div class="cake-card shadow-lg rounded overflow-hidden">
-                    <img src="img/vanilla cake poster.png" alt="Vanilla Cake" class="w-full">
-                    <div class="p-4">
-                        <h5 class="text-xl font-semibold">Vanilla Cake</h5>
-                        <div class="flex items-center space-x-2">
-                            <div class="rating-stars text-yellow-400">
-                                <!-- Rating Stars will be filled by JS -->
-                            </div>
-                            <span class="text-gray-500">(<span class="avg-rating">3.8</span> stars)</span>
-                        </div>
-                        <p class="text-sm text-gray-500"><span class="num-ratings">(85 ratings)</span></p>
-                    </div>
+                <div class="cake-card shadow-lg rounded p-6 bg-white">
+                    <h5 class="text-xl font-semibold">Vanilla Cake</h5>
+                    <p class="text-gray-500">Rating: 3.8 (85 ratings)</p>
                 </div>
-                <div class="cake-card shadow-lg rounded overflow-hidden">
-                    <img src="img/strawberry cake poster.png" alt="Strawberry Cake" class="w-full">
-                    <div class="p-4">
-                        <h5 class="text-xl font-semibold">Strawberry Cake</h5>
-                        <div class="flex items-center space-x-2">
-                            <div class="rating-stars text-yellow-400">
-                                <!-- Rating Stars will be filled by JS -->
-                            </div>
-                            <span class="text-gray-500">(<span class="avg-rating">4.0</span> stars)</span>
-                        </div>
-                        <p class="text-sm text-gray-500"><span class="num-ratings">(95 ratings)</span></p>
-                    </div>
+                <div class="cake-card shadow-lg rounded p-6 bg-white">
+                    <h5 class="text-xl font-semibold">Strawberry Cake</h5>
+                    <p class="text-gray-500">Rating: 4.0 (95 ratings)</p>
                 </div>
-                <div class="cake-card shadow-lg rounded overflow-hidden">
-                    <img src="img/cheese cake poster.png" alt="Cheesecake" class="w-full">
-                    <div class="p-4">
-                        <h5 class="text-xl font-semibold">Cheesecake</h5>
-                        <div class="flex items-center space-x-2">
-                            <div class="rating-stars text-yellow-400">
-                                <!-- Rating Stars will be filled by JS -->
-                            </div>
-                            <span class="text-gray-500">(<span class="avg-rating">4.7</span> stars)</span>
-                        </div>
-                        <p class="text-sm text-gray-500"><span class="num-ratings">(150 ratings)</span></p>
-                    </div>
+                <div class="cake-card shadow-lg rounded p-6 bg-white">
+                    <h5 class="text-xl font-semibold">Cheesecake</h5>
+                    <p class="text-gray-500">Rating: 4.7 (150 ratings)</p>
                 </div>
-                <div class="cake-card shadow-lg rounded overflow-hidden">
-                    <img src="img/red velvet cake poster.png" alt="Red Velvet Cake" class="w-full">
-                    <div class="p-4">
-                        <h5 class="text-xl font-semibold">Red Velvet Cake</h5>
-                        <div class="flex items-center space-x-2">
-                            <div class="rating-stars text-yellow-400">
-                                <!-- Rating Stars will be filled by JS -->
-                            </div>
-                            <span class="text-gray-500">(<span class="avg-rating">4.3</span> stars)</span>
-                        </div>
-                        <p class="text-sm text-gray-500"><span class="num-ratings">(110 ratings)</span></p>
-                    </div>
+                <div class="cake-card shadow-lg rounded p-6 bg-white">
+                    <h5 class="text-xl font-semibold">Red Velvet Cake</h5>
+                    <p class="text-gray-500">Rating: 4.3 (110 ratings)</p>
                 </div>
             </div>
         </div>
