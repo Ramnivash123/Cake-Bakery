@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cakes - Cake Bakery</title>
-    <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="font-sans bg-gray-50 text-gray-800">
+
     <!-- Navbar -->
     <nav class="bg-pink-100 py-4">
         <div class="container mx-auto flex justify-between items-center">
@@ -18,32 +18,72 @@
         </div>
     </nav>
 
-    <!-- Featured Cakes Section -->
-    <section class="py-16">
+    <!--main content-->
+    <section class="py-10">
         <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-8">Our Varieties of Cakes</h2>
+            <h2 class="text-3xl font-bold text-pink-600 mb-8">Our Cakes</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="cake-card shadow-lg rounded p-6 bg-white">
+                <div class="card bg-white shadow-lg rounded-lg p-6">
                     <h5 class="text-xl font-semibold">Chocolate Cake</h5>
-                    <p class="text-gray-500">Rating: 4.5 (120 ratings)</p>
                 </div>
-                <div class="cake-card shadow-lg rounded p-6 bg-white">
+                <div class="card bg-white shadow-lg rounded-lg p-6">
                     <h5 class="text-xl font-semibold">Vanilla Cake</h5>
-                    <p class="text-gray-500">Rating: 3.8 (85 ratings)</p>
                 </div>
-                <div class="cake-card shadow-lg rounded p-6 bg-white">
+                <div class="card bg-white shadow-lg rounded-lg p-6">
                     <h5 class="text-xl font-semibold">Strawberry Cake</h5>
-                    <p class="text-gray-500">Rating: 4.0 (95 ratings)</p>
                 </div>
-                <div class="cake-card shadow-lg rounded p-6 bg-white">
+                <div class="card bg-white shadow-lg rounded-lg p-6">
                     <h5 class="text-xl font-semibold">Cheesecake</h5>
-                    <p class="text-gray-500">Rating: 4.7 (150 ratings)</p>
                 </div>
-                <div class="cake-card shadow-lg rounded p-6 bg-white">
+                <div class="card bg-white shadow-lg rounded-lg p-6">
                     <h5 class="text-xl font-semibold">Red Velvet Cake</h5>
-                    <p class="text-gray-500">Rating: 4.3 (110 ratings)</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Display User Ratings -->
+    <section class="py-10 bg-gray-100">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6">Customer Reviews</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for rating in ratings %}
+                <div class="bg-white shadow-lg rounded p-6">
+                    <h5 class="text-xl font-semibold">{{ rating.product_name }}</h5>
+                    <p class="text-gray-500">Rated: <strong>{{ rating.rating }}</strong> stars</p>
+                    <p class="italic">"{{ rating.feedback }}"</p>
+                    <p class="text-sm text-gray-400">- {{ rating.username }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6">Rate Our Cakes</h2>
+            <form action="{{ url_for('submit_rating') }}" method="POST" class="bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto">
+                <label class="block text-gray-700 font-semibold">Select Cake</label>
+                <select name="product_name" class="w-full mt-2 p-2 border rounded">
+                    <option value="Chocolate Cake">Chocolate Cake</option>
+                    <option value="Vanilla Cake">Vanilla Cake</option>
+                    <option value="Strawberry Cake">Strawberry Cake</option>
+                    <option value="Cheesecake">Cheesecake</option>
+                    <option value="Red Velvet Cake">Red Velvet Cake</option>
+                </select>
+
+                <label class="block text-gray-700 font-semibold mt-4">Rating</label>
+                <select name="rating" class="w-full mt-2 p-2 border rounded">
+                    <option value="5">5 - Excellent</option>
+                    <option value="4">4 - Good</option>
+                    <option value="3">3 - Average</option>
+                    <option value="2">2 - Poor</option>
+                    <option value="1">1 - Bad</option>
+                </select>
+
+                <label class="block text-gray-700 font-semibold mt-4">Feedback</label>
+                <textarea name="feedback" class="w-full mt-2 p-2 border rounded" placeholder="Share your thoughts..."></textarea>
+
+                <button type="submit" class="mt-4 w-full bg-pink-600 text-white p-2 rounded hover:bg-pink-700">Submit Rating</button>
+            </form>
         </div>
     </section>
 
@@ -51,5 +91,6 @@
     <footer class="bg-pink-100 py-4 text-center">
         <p>&copy; 2025 Cakecious Bakery. All Rights Reserved.</p>
     </footer>
+
 </body>
 </html>
