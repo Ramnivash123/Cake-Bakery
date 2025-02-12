@@ -16,6 +16,14 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)  # Store hashed passwords in real applications
 
+# Database Model
+class CakeRating(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), nullable=False)
+    product_name = db.Column(db.String(100), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    feedback = db.Column(db.Text, nullable=False)
+
 # Create database tables before running
 with app.app_context():
     db.create_all()
@@ -80,12 +88,41 @@ def main():
 
     return render_template("main.html", username=session.get("username"))
 
-@app.route("/cakes")
+@app.route("/cakes", methods=["GET", "POST"])
 def cakes():
     if "user_id" not in session:
         flash("Please log in to continue.", "warning")
         return redirect(url_for("signin"))
-    return render_template("cakes.html")
+
+    # Fetch all cake reviews from the database
+    ratings = CakeRating.query.all()
+    
+    return render_template("cakes.html", username=session.get("username"), ratings=ratings)
+
+# Route to Handle Rating Submission
+@app.route("/submit_rating", methods=["POST"])
+def submit_rating():
+    if "user_id" not in session:
+        flash("Please log in to continue.", "warning")
+        return redirect(url_for("signin"))
+
+    username = session.get("username")
+    product_name = request.form.get("product_name")
+    rating = request.form.get("rating")
+    feedback = request.form.get("feedback")
+
+    if not product_name or not rating or not feedback:
+        flash("All fields are required!", "danger")
+        return redirect(url_for("cakes"))
+
+    new_rating = CakeRating(username=username, product_name=product_name, rating=int(rating), feedback=feedback)
+    db.session.add(new_rating)
+    db.session.commit()
+
+    flash("Your rating has been submitted!", "success")
+    return redirect(url_for("cakes"))
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
